@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "cells": [
+    {
+      "type": "cs",
+      "input": "assist"
+    },
+    {
+      "type": "cs",
+      "input": "importFiles"
+    },
+    {
+      "type": "cs",
+      "input": "importFiles [ \"/Users/apple/Downloads/dataset_regression_supermarket_sales.csv\" ]"
+    },
+    {
+      "type": "cs",
+      "input": "setupParse source_frames: [ \"nfs://Users/apple/Downloads/dataset_regression_supermarket_sales.csv\" ]"
+    },
+    {
+      "type": "cs",
+      "input": "parseFiles\n  source_frames: [\"nfs://Users/apple/Downloads/dataset_regression_supermarket_sales.csv\"]\n  destination_frame: \"dataset_regression_supermarket_sales.hex\"\n  parse_type: \"CSV\"\n  separator: 44\n  number_columns: 18\n  single_quotes: false\n  column_names: [\"Invoice ID\",\"Branch\",\"City\",\"Customer type\",\"Gender\",\"Product line\",\"Unit price\",\"Quantity\",\"Tax\",\"Total\",\"Date\",\"Time\",\"Payment\",\"CostOfGoodsSold\",\"gross margin percentage\",\"gross income\",\"RatingDecimal\",\"RatingBinary\"]\n  column_types: [\"String\",\"Enum\",\"Enum\",\"Enum\",\"Enum\",\"Enum\",\"Numeric\",\"Numeric\",\"Numeric\",\"Numeric\",\"Time\",\"Enum\",\"Enum\",\"Numeric\",\"Numeric\",\"Numeric\",\"Numeric\",\"Numeric\"]\n  delete_on_done: true\n  check_header: 1\n  chunk_size: 4174\n  escapechar: undefined"
+    },
+    {
+      "type": "cs",
+      "input": "getFrameSummary \"dataset_regression_supermarket_sales.hex\""
+    },
+    {
+      "type": "cs",
+      "input": "getFrameData \"dataset_regression_supermarket_sales.hex\""
+    },
+    {
+      "type": "cs",
+      "input": "splitFrame"
+    },
+    {
+      "type": "cs",
+      "input": "splitFrame \"dataset_regression_supermarket_sales.hex\", [0.8], [\"dataset_regression_supermarket_sales.hex_0.80\",\"dataset_regression_supermarket_sales.hex_0.20\"], 43"
+    },
+    {
+      "type": "cs",
+      "input": "runAutoML"
+    },
+    {
+      "type": "cs",
+      "input": "runAutoML {\"build_control\":{\"project_name\":\"supermarket_sales_model_1\",\"distribution\":\"AUTO\",\"nfolds\":-1,\"balance_classes\":false,\"stopping_criteria\":{\"seed\":-1,\"max_models\":0,\"max_runtime_secs\":0,\"max_runtime_secs_per_model\":0,\"stopping_rounds\":3,\"stopping_metric\":\"AUTO\",\"stopping_tolerance\":-1},\"keep_cross_validation_predictions\":true,\"keep_cross_validation_models\":true,\"keep_cross_validation_fold_assignment\":false},\"input_spec\":{\"training_frame\":\"dataset_regression_supermarket_sales.hex_0.80\",\"response_column\":\"RatingDecimal\",\"ignored_columns\":[\"Branch\",\"City\",\"Customer type\",\"Gender\",\"Product line\",\"Unit price\",\"Quantity\",\"Tax\",\"Total\",\"Date\",\"Time\",\"Payment\",\"CostOfGoodsSold\",\"gross income\",\"RatingDecimal\"],\"sort_metric\":\"AUTO\"},\"build_models\":{\"exclude_algos\":[],\"exploitation_ratio\":-1,\"monotone_constraints\":[]}}, 'exec'"
+    },
+    {
+      "type": "cs",
+      "input": "getLeaderboard \"supermarket_sales_model_1@@RatingDecimal\""
+    }
+  ]
+}
